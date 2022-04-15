@@ -5,7 +5,6 @@ export const USER_INITIAL_STATE = {
 };
 
 export const userReducer = (state = USER_INITIAL_STATE, action = {}) => {
-  // we need to define initial states bc we don't have useReducer hook to initialize state for us 
   const { type, payload } = action;
 
   switch (type) {

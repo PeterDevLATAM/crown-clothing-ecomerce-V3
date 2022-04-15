@@ -14,7 +14,6 @@ import {
 } from './utils/firebase/firebase.utils';
 
 const App = () => {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,8 +26,7 @@ const App = () => {
     });
 
     return unsubscribe;
-  }, [dispatch]); // dispatch is only there to make the warning go away, but dispatch never actually changes
-
+  }, [dispatch]);
   return (
     <Routes>
       <Route path='/' element={<Navigation />}>
