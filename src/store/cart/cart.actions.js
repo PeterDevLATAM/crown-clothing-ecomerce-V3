@@ -6,6 +6,7 @@ export const setIsCartOpen = (boolean) => {
 };
 
 export const addItemToCart = (cartItems, productToAdd) => {
+  
   const newCartItems = addCartItem(cartItems, productToAdd);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
@@ -21,6 +22,7 @@ export const clearItemFromCart = (cartItems, cartItemToClear) => {
 };
 
 const addCartItem = (cartItems, productToAdd) => {
+  console.log("cartItems: ", cartItems)
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id
   );

@@ -5,6 +5,7 @@ const selectCartReducer = (state) => state.cart;
 export const selectCartItems = createSelector([selectCartReducer], (cart) => {
   return cart.cartItems;
 });
+
 export const selectIsCartOpen = createSelector([selectCartReducer], (cart) => {
   return cart.isCartOpen;
 });
