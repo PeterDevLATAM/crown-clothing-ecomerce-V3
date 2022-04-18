@@ -1,25 +1,33 @@
-import { compose, createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
-import {persistStore, persistReducer} from "redux-persist"
-import storage from "redux-persist/lib/storage"
+import { compose, createStore, applyMiddleware } from "redux";
+import logger from "redux-logger";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import { rootReducer } from './root-reducer';
+import { rootReducer } from "./root-reducer";
 
-const middleWares = [process.env.NODE_ENV === 'development' && logger].filter(
+const middleWares = [process.env.NODE_ENV === "development" && logger].filter(
   Boolean
 );
 
-const persistConfig= {
-  key: "root", 
+const persistConfig = {
+  key: "root",
   storage,
-  blacklist: ['users'] //in here you put the slice reducers you don't want to persist the state
-  // in this case firebase auth is taking care of the user so it may clash 
+  blacklist: ["users"], //in here you put the slice reducers you don't want to persist the state
+  // in this case firebase auth is taking care of the user so it may clash
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-}
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const composedEnhancer =
+  (process.env.NODE_ENV === "development" &&
+    window &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+const composedEnhancers = composedEnhancer(applyMiddleware(...middleWares));
 
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+export const store = createStore(
+  persistedReducer,
+  undefined,
+  composedEnhancers
+);
 
-export const store = createStore(persistedReducer, undefined, composedEnhancers);
-
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);
